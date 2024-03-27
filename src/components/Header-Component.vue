@@ -2,6 +2,9 @@
     <v-app-bar :elevation="10">
         <template v-slot:prepend>
           <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+          <div class="favicon-icon">
+            <img src="/favicon.svg" alt="Favicon">
+          </div>
         </template>
 
         <v-app-bar-title>Doctor Who Ratings</v-app-bar-title>
@@ -22,7 +25,6 @@
 </template>
 
 <script>
-
 export default {
         name: 'Header-Component',
         data: () => ({
@@ -39,15 +41,29 @@ export default {
                 }
             ],
         }),
-
         watch: {
             group() {
                 this.drawer = false
             }
-        }
+        },
+        components: {}
     }
 </script>
 
 <style scoped>
+  #icon {
+    width: 50px;
+    height: 50px;
+  }
+  .favicon-icon {
+  width: 40px; 
+  height: 40px; 
+  cursor: pointer;
+  }
 
+.favicon-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 </style>

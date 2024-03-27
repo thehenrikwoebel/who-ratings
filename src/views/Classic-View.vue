@@ -3,6 +3,7 @@
       <Header></Header>
       <v-main>
         <v-container>
+          <v-select :items="[1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24]" v-model="season" label="Season" class="select" @change="fetchEpisodes"></v-select>
           <EpisodeCard :classic="true" :episode="episodes[index]" :title="episodes_titles[index]" :description="episodes_descriptions[index]" :heart="episodes_hearts[index]" v-for="(item, index) in episodes_titles" v-bind:key="item.id"></EpisodeCard>
         </v-container>
       </v-main>
@@ -25,8 +26,9 @@
       episodes_descriptions: [],
       episodes_hearts: [],
       episodes: [],
+      season: 1,
       async fetchEpisodes() {
-        let request = await fetch("/api/db/getClassics"); //requests a list of all classic episodes
+        let request = await fetch("/api/db/getClassics/" + this.season); //requests a list of all classic episodes
         this.episodes_titles = [];
         this.episodes_descriptions = [];
         this.episodes_hearts = [];
@@ -42,7 +44,18 @@
     }),
     mounted() { // requests a list of all classic episodes everytime the site gets loaded
       this.fetchEpisodes();
-    }
+    },
+    watch: {
+            season: function() {
+                this.fetchEpisodes();
+            }
+        }
   }
   </script>
+
+<style scoped>
+  .select {
+      max-width: 300px;
+  }
+</style>
   
