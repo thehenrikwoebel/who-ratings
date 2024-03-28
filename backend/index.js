@@ -12,6 +12,10 @@ const sql_newWho_hearts = 'SELECT * FROM newwho WHERE heart > 0;';
 const sql_classics_hearts = 'SELECT * FROM classics WHERE heart > 0;';
 const sql_newWho_season = 'SELECT * FROM newwho WHERE season = ?;';
 const sql_classics_season = 'SELECT * FROM classics WHERE season = ?;';
+const sql_classics_rating = 'SELECT * FROM classics ORDER BY rating DESC;';
+const sql_newWho_rating = 'SELECT * FROM newwho ORDER BY rating DESC;';
+const sql_classics_rate = 'UPDATE classics SET rating = ? WHERE episode = ?;';
+const sql_newWho_rate = 'UPDATE newwho SET rating = ? WHERE episode = ?;';
 const sql_insert = 'INSERT INTO todos (text) VALUES (?);';
 const sql_delete = "DELETE FROM todos WHERE text=?;";
 
@@ -81,6 +85,40 @@ app.get("/api/db/getClassics/:season", (req, res) => {
             console.log(rows);
         }
     });
+});
+
+app.get("/api/db/getClassicsratings", (req, res) => {
+    db.all(sql_classics_rating, [], (err, rows) => {
+        if(err) {
+            throw err;
+        } else {
+            res.send(rows);
+            console.log(rows);
+        }
+    });
+});
+
+app.get("/api/db/getNewWhoratings", (req, res) => {
+    db.all(sql_newWho_rating, [], (err, rows) => {
+        if(err) {
+            throw err;
+        } else {
+            res.send(rows);
+            console.log(rows);
+        }
+    });
+});
+
+app.get("/api/db/rateNewWho/:episode/:rating", (req, res) => {
+    db.run(sql_newWho_rate, [req.params.rating, req.params.episode]);
+    res.sendStatus(200);
+    console.log("Episode " + req.params.episode + " hat jetzt ein Rating von " +  req.params.rating);
+});
+
+app.get("/api/db/rateClassic/:episode/:rating", (req, res) => {
+    db.run(sql_classics_rate, [req.params.rating, req.params.episode]);
+    res.sendStatus(200);
+    console.log("Episode " + req.params.episode + " hat jetzt ein Rating von " +  req.params.rating);
 });
 
 app.get("/api/db/heartNewWho/:episode", (req, res) => {

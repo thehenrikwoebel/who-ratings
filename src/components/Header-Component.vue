@@ -12,7 +12,7 @@
         <template v-slot:append>
           <v-btn icon="mdi-heart" router :to="'hearts'"></v-btn>
 
-          <v-btn icon="mdi-magnify"></v-btn>
+          <v-btn icon="mdi-star" router :to="'rating'"></v-btn>
 
           <v-btn icon="mdi-dots-vertical"></v-btn>
         </template>
