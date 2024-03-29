@@ -2,7 +2,7 @@
     <Header></Header>
     <v-main>
         <v-container>
-            <v-select :items="[1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24]" v-model="season" label="Season" class="select" @change="fetchEpisodes"></v-select>
+            <v-select :items="[1,2,3,4,5,6,7,8,9,10,11,12,13]" v-model="season" label="Season" class="select" @change="fetchEpisodes"></v-select>
             <EpisodeCard :rating="rating[index]" :classic="false" :episode="episodes[index]" :title="episodes_titles[index]" :description="episodes_descriptions[index]" :heart="episodes_hearts[index]" v-for="(item, index) in episodes_titles" v-bind:key="item.id"></EpisodeCard>
         </v-container>
     </v-main>
