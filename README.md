@@ -1,24 +1,20 @@
 # who-ratings
 
-## Project setup
+### 1. Project setup
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+cd who-ratings
+npm i
 ```
 
-### Compiles and minifies for production
+### 2. Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### 3. Run locally
 ```
-npm run lint
+cd ../
+cd backend
+npm i
+node index.js
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
