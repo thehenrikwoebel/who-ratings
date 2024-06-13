@@ -26,18 +26,19 @@
             episode_var: Number,
             classic_var: Boolean,
             rating_var: Number,
+            season_var: Number,
             heartEpisode() {
                 if(this.classic_var) { // tests if episode is classic
                     if(this.heart_var) { //tests if episode is hearted (Is true when it needs to be hearted; Check Code in line 5 ;) )
-                        fetch("/api/db/heartclassics/" + this.episode_var); // hearts the episode
+                        fetch("/api/db/heartclassics/" + this.episode_var + "/" + this.season); // hearts the episode
                     } else {
-                        fetch("/api/db/unheartclassics/" + this.episode_var); // unhearts the episode
+                        fetch("/api/db/unheartclassics/" + this.episode_var + "/" + this.season); // unhearts the episode
                     }   
                 } else {
                     if(this.heart_var) { //tests if episode is hearted (Is true when it needs to be hearted; Check Code in line 5 ;) )
-                        fetch("/api/db/heartNewWho/" + this.episode_var); // hearts the episode
+                        fetch("/api/db/heartNewWho/" + this.episode_var + "/" + this.season); // hearts the episode
                     } else {
-                        fetch("/api/db/unheartNewWho/" + this.episode_var); // unhearts the episode
+                        fetch("/api/db/unheartNewWho/" + this.episode_var + "/" + this.season); // unhearts the episode
                     } 
                 }
             },
@@ -56,9 +57,9 @@
             },
             rateEpisode() {
                 if(this.classic_var) {
-                    fetch("/api/db/rateClassic/" + this.episode_var + "/" + this.rating_var);
+                    fetch("/api/db/rateClassic/" + this.episode_var + "/" + this.rating_var + "/" + this.season_var);
                 } else {
-                    fetch("/api/db/rateNewWho/" + this.episode_var + "/" + this.rating_var);
+                    fetch("/api/db/rateNewWho/" + this.episode_var + "/" + this.rating_var + "/" + this.season_var);
                 }
             },
             rules: {
@@ -74,13 +75,15 @@
             heart: Boolean,
             episode: Number,
             classic: Boolean,
-            rating: Number
+            rating: Number,
+            season: Number,
         },
         mounted() {
             this.heart_var = this.heart;
             this.episode_var = this.episode;
             this.classic_var = this.classic;
             this.rating_var = this.rating;
+            this.season_var = this.season;
         }
     }
 </script>

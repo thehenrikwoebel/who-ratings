@@ -4,20 +4,18 @@ const app = express();
 const db = new sqlite3.Database('./db/database.db');
 const sql_classics ='SELECT * FROM classics;';
 const sql_newWho = 'SELECT * FROM newWho;';
-const sql_newWho_heart = 'UPDATE newWho SET heart = 1 WHERE episode = ?;';
-const sql_newWho_unheart = 'UPDATE newWho SET heart = 0 WHERE episode = ?;';
-const sql_classics_heart = 'UPDATE classics SET heart = 1 WHERE episode = ?;';
-const sql_classics_unheart = 'UPDATE classics SET heart = 0 WHERE episode = ?;';
+const sql_newWho_heart = 'UPDATE newWho SET heart = 1 WHERE episode = ? AND season = ?;';
+const sql_newWho_unheart = 'UPDATE newWho SET heart = 0 WHERE episode = ? AND season = ?;';
+const sql_classics_heart = 'UPDATE classics SET heart = 1 WHERE episode = ? AND season = ?;';
+const sql_classics_unheart = 'UPDATE classics SET heart = 0 WHERE episode = ? AND season = ?;';
 const sql_newWho_hearts = 'SELECT * FROM newwho WHERE heart > 0;';
 const sql_classics_hearts = 'SELECT * FROM classics WHERE heart > 0;';
 const sql_newWho_season = 'SELECT * FROM newwho WHERE season = ?;';
 const sql_classics_season = 'SELECT * FROM classics WHERE season = ?;';
 const sql_classics_rating = 'SELECT * FROM classics WHERE rating > 0 ORDER BY rating DESC;';
 const sql_newWho_rating = 'SELECT * FROM newwho WHERE rating > 0 ORDER BY rating DESC;';
-const sql_classics_rate = 'UPDATE classics SET rating = ? WHERE episode = ?;';
-const sql_newWho_rate = 'UPDATE newwho SET rating = ? WHERE episode = ?;';
-const sql_insert = 'INSERT INTO todos (text) VALUES (?);';
-const sql_delete = "DELETE FROM todos WHERE text=?;";
+const sql_classics_rate = 'UPDATE classics SET rating = ? WHERE episode = ? AND season = ?;';
+const sql_newWho_rate = 'UPDATE newwho SET rating = ? WHERE episode = ? AND season = ?;';
 
 app.use(express.static('../dist'));
 
@@ -109,35 +107,35 @@ app.get("/api/db/getNewWhoratings", (req, res) => {
     });
 });
 
-app.get("/api/db/rateNewWho/:episode/:rating", (req, res) => {
-    db.run(sql_newWho_rate, [req.params.rating, req.params.episode]);
+app.get("/api/db/rateNewWho/:episode/:rating/:season", (req, res) => {
+    db.run(sql_newWho_rate, [req.params.rating, req.params.episode, req.params.season]);
     res.sendStatus(200);
     console.log("Episode " + req.params.episode + " hat jetzt ein Rating von " +  req.params.rating);
 });
 
-app.get("/api/db/rateClassic/:episode/:rating", (req, res) => {
-    db.run(sql_classics_rate, [req.params.rating, req.params.episode]);
+app.get("/api/db/rateClassic/:episode/:rating/:season", (req, res) => {
+    db.run(sql_classics_rate, [req.params.rating, req.params.episode, req.params.season]);
     res.sendStatus(200);
     console.log("Episode " + req.params.episode + " hat jetzt ein Rating von " +  req.params.rating);
 });
 
-app.get("/api/db/heartNewWho/:episode", (req, res) => {
-    db.run(sql_newWho_heart, [req.params.episode]);
+app.get("/api/db/heartNewWho/:episode/:season", (req, res) => {
+    db.run(sql_newWho_heart, [req.params.episode, req.params.season]);
     res.sendStatus(200);
 });
 
-app.get("/api/db/heartclassics/:episode", (req, res) => {
-    db.run(sql_classics_heart, [req.params.episode]);
+app.get("/api/db/heartclassics/:episode/:season", (req, res) => {
+    db.run(sql_classics_heart, [req.params.episode, req.params.season]);
     res.sendStatus(200);
 });
 
-app.get("/api/db/unheartclassics/:episode", (req, res) => {
-    db.run(sql_classics_unheart, [req.params.episode]);
+app.get("/api/db/unheartclassics/:episode/:season", (req, res) => {
+    db.run(sql_classics_unheart, [req.params.episode, req.params.season]);
     res.sendStatus(200);
 });
 
-app.get("/api/db/unheartNewWho/:episode", (req, res) => {
-    db.run(sql_newWho_unheart, [req.params.episode]);
+app.get("/api/db/unheartNewWho/:episode/:season", (req, res) => {
+    db.run(sql_newWho_unheart, [req.params.episode, req.params.season]);
     res.sendStatus(200);
 });
 
